@@ -9,26 +9,25 @@ angular.module('angularjsAuthTutorialApp')
 	// Add $scope variable to store the user
 	//$scope.currentUser = '';
     $scope.currentUser = UserDataService.getCurrentUser();
-	$scope.testVar = $scope.currentUser.display_name;
+	  $scope.testVar = $scope.currentUser.display_name;
 
 }])
 
-.controller('MainCtrl', ['$scope', function ($scope) {
+.controller('MainCtrl', ['$scope','$log', 
+                function ($scope, $log) {
         
- }])
+}])
 
-.controller('LoginCtrl', ['$scope', '$location', 'UserEventsService','$http', 
-	function($scope, $location, UserEventsService,$http) {
+.controller('LoginCtrl', ['$scope', '$location', 'UserEventsService','$http','$log',
+	function($scope, $location, UserEventsService,$http,$log) {
 
-		console.log('LoginCtrl start');
+		$log('LoginCtrl start');
 
         $scope.$on(UserEventsService.login.loginSuccess, function(e, userDataObj) {
-    		console.log('LoginCtrl SUCCESS');
-    		console.log(userDataObj);
-            console.log('Setting session_id : ' + userDataObj.session_id);
-            $http.defaults.headers.common['X-DreamFactory-Session-Token'] = userDataObj.session_id;
-
-
+    		$log('LoginCtrl SUCCESS');
+    		$log(userDataObj);
+        $log('Setting session_id : ' + userDataObj.session_id);
+        $http.defaults.headers.common['X-DreamFactory-Session-Token'] = userDataObj.session_id;
 
     		$scope.$parent.currentUser = userDataObj;
             $location.url('/');
@@ -36,9 +35,9 @@ angular.module('angularjsAuthTutorialApp')
         );
     }])
 
-	.controller('LogoutCtrl', ['$scope', '$location', 'UserEventsService','$http',
-                function($scope, $location, UserEventsService,$http) {
-		console.log('LogoutCtrl start');
+	.controller('LogoutCtrl', ['$scope', '$location', 'UserEventsService','$http','$log',
+                function($scope, $location, UserEventsService,$http,$log) {
+		$log('LogoutCtrl start');
         $scope.$on(UserEventsService.logout.logoutSuccess, function(e, userDataObj) {
     		console.log('LogoutCtrl SUCCESS');
             console.log(userDataObj);
@@ -51,12 +50,86 @@ angular.module('angularjsAuthTutorialApp')
         });
     }])
 
-.controller('UserInfoCtrl', ['$scope','$http', function($scope,$http) {
+.controller('UserInfoCtrl', 
+    ['$scope','$http','$log',
+      function($scope,$http,$log) {
 
-$scope.userData = $scope.$parent.currentUser;
+        $scope.userData = $scope.$parent.currentUser;
+
+
+
 $http.get('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log').
   success(function(data, status, headers, config) {
-     console.log('UserInfoCtrl SUCCESS');
+       $log('UserInfoCtrl SUCCESS');
+       $log(status);
+       $log(data);
+       $log(headers);
+       $log(config);
+       $scope.elenco = data.record;
+
+
+  }).
+  error(function(data, status, headers, config) {
+        $log('UserInfoCtrl error');
+        $log(status);
+        $log(data);
+        $log(headers);
+        $log(config);
+
+  });
+
+  //https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log
+  $scope.postLogWithError = function (){
+    console.log('postLogWithError ....');
+    var data2post = {};
+
+    $http.post(
+        'https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log1',
+        data2post).
+    success(function(data, status, headers, config) {
+     console.log('postLogWithError SUCCESS');
+       console.log(status);
+       console.log(data);
+       console.log(headers);
+       console.log(config);
+       $scope.elenco = data.record;
+
+
+  });
+
+
+  };
+
+  $scope.postLog = function (){
+
+    console.log('postLog ....');
+
+    var data2post = {
+          "address":  faker.address.streetName() + ' ' + faker.address.city(),
+          "age":      faker.helpers.randomNumber(),
+          "balance":  faker.helpers.randomNumber(),
+          "company":  faker.company.companyName(),
+          "counter":  faker.helpers.randomNumber(),
+          "email":    faker.internet.email(),
+          "gender":   faker.name.findName(),
+          "inserted": faker.date.past(),
+          "ipAddress":faker.internet.ip(),
+          "isActive": 1,
+          "userAgent":faker.internet.userAgent(),
+          "latitude": faker.address.latitude(),
+          "longitude":faker.address.longitude(),
+          "name":     faker.name.findName(),
+          "phone":    faker.phone.phoneNumber(),
+          "picture":  faker.image.imageUrl(),
+          "registered":faker.date.recent()
+      };
+
+      console.log(data2post);
+
+$http.post('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log',
+  data2post).
+  success(function(data, status, headers, config) {
+     console.log('postLog SUCCESS');
        console.log(status);
        console.log(data);
        console.log(headers);
@@ -66,7 +139,7 @@ $http.get('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log
 
   }).
   error(function(data, status, headers, config) {
-     console.log('UserInfoCtrl error');
+     console.log('postLog error');
         console.log(status);
         console.log(data);
        console.log(headers);
@@ -75,8 +148,8 @@ $http.get('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log
   });
 
 
+  };
 
-    //https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log
 
 }])    
 .controller('NavigationCtrl', ['$scope', function($scope) {

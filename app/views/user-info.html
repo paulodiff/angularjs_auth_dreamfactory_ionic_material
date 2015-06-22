@@ -4,6 +4,10 @@
 <p>Is Admin: {{userData.is_sys_admin}}</p>
 <code>userData {{userData}}</code>
 <code>userData {{elenco | json}}</code>
+
+<button ng-click="postLog()">Post Log</button>
+<button ng-click="postLogWithError()">Post Log with ERROR!</button>
+
 <table class="table">
   <tr ng-repeat="model in elenco">
   	<td>{{model.age}}{{model | json}}</td>

@@ -12,7 +12,8 @@
     "angular-sanitize": "1.4.1",
     "angular-route": "1.4.1",
     "dreamfactory-user-management": ">=1.0.0",
-    "angular-mocks": "~1.4.1"
+    "angular-mocks": "~1.4.1",
+    "stacktrace-js": "~0.6.4"
   },
   "devDependencies": {
     "angular-mocks": "1.4.1",

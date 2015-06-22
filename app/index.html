@@ -43,6 +43,9 @@
     <![endif]-->
 
     <!-- build:js scripts/vendor.js -->
+
+    <script src="http://marak.com/faker.js/js/faker.js"></script>
+
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -53,8 +56,13 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/dreamfactory-user-management/dreamfactory-user-management.js"></script>
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="bower_components/stacktrace-js/stacktrace.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+
+
+
+
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
@@ -62,6 +70,7 @@
         <script src="scripts/data-mock-service.js"></script>
         <script src="scripts/app-mock-backend.js"></script>
         <script src="scripts/http-service.js"></script>
+        <script src="scripts/logger-module.js"></script>
         <!-- endbuild -->
 </body>
 </html>

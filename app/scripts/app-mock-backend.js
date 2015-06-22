@@ -4,7 +4,7 @@
 // We will mock $httpBackend, capturing routes and returning data
 // http://www.jeremyzerr.com/angularjs-backend-less-development-using-httpbackend-mock
 
-
+'use strict';
 // Set $httpBackend.whenGET for mock or .passThrough() for serve
 angular.module('angularjsAuthTutorialApp').run(function($httpBackend, DataMockModule) {
     
@@ -60,6 +60,8 @@ angular.module('angularjsAuthTutorialApp').run(function($httpBackend, DataMockMo
     $httpBackend.whenGET(/views\//).passThrough();
     $httpBackend.whenPOST('https://dsp-paulo-difficiliora.cloud.dreamfactory.com/rest/user/session').passThrough();
     $httpBackend.whenDELETE('https://dsp-paulo-difficiliora.cloud.dreamfactory.com/rest/user/session').passThrough();
+    $httpBackend.whenPOST('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log').passThrough();
+    $httpBackend.whenPOST('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log1').passThrough();
     $httpBackend.whenGET('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log')
     .respond(function(method, url, data) {
         var games = {};

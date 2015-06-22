@@ -1,3 +1,4 @@
+'use strict';
 angular.module('angularjsAuthTutorialApp')
 .factory('HttpService', function($http) {
     var service = {
@@ -22,4 +23,4 @@ angular.module('angularjsAuthTutorialApp')
     };
     
     return service;    
-})
+});
