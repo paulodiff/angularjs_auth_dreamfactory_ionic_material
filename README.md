@@ -2,13 +2,15 @@
 
 Framework implementato con
 
-IONIC
+AngularJS 
 
-AngularJS + mockup (per fake API)
+Bootstrap
+
+IONIC ** NON IMPLEMENTATO
+
+Mockup (per fake API)
 
 Dreamfacotry API call (backend)
-
-Material Design
 
 Testing Framework
 

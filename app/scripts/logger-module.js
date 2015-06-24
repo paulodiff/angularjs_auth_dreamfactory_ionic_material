@@ -15,8 +15,8 @@ angular.module('angularjsAuthTutorialApp')
 		} 
 	})
 .factory("exceptionLoggingService", 
-	["$log","$window", "traceService", 
-	function($log, $window, traceService)
+	["$log","$window", "traceService","DSP_API_KEY",
+	function($log, $window, traceService, DSP_API_KEY)
 	{ 
 		function error(exception, cause)
 		{ 
@@ -30,7 +30,7 @@ angular.module('angularjsAuthTutorialApp')
 				var stackTrace = traceService.print({e: exception}); 
 				// use AJAX (in this example jQuery) and NOT 
 				// an angular service such as $http 
-				$log.log('posting ERROR..');
+				$log.log('posting ERROR REMOTE with ajax..');
 				$log.log($window.navigator.userAgent);
 				$log.log($window.location.href);
 				//$log.log(stackTrace);
@@ -47,12 +47,19 @@ angular.module('angularjsAuthTutorialApp')
       			};
 
 				$log.log(data2post);
+				$log.log('header:' + DSP_API_KEY);
+	//$httpProvider.defaults.headers.common['X-DreamFactory-Application-Name'] = DSP_API_KEY;
+	// _xhrObj.setRequestHeader("X-DreamFactory-Application-Name", DSP_API_KEY);
 
-	
 				$.ajax({ 
 					type: "POST", 
+					beforeSend: function (request)
+            		{
+                		request.setRequestHeader("X-DreamFactory-Application-Name", DSP_API_KEY);
+            		},
 					url: "https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log", 
 					contentType: "application/json", 
+					processData: false,
 					data: data2post
 				}); 
 

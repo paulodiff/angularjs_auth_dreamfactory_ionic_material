@@ -18,15 +18,16 @@ angular.module('angularjsAuthTutorialApp')
         
 }])
 
-.controller('LoginCtrl', ['$scope', '$location', 'UserEventsService','$http','$log',
-	function($scope, $location, UserEventsService,$http,$log) {
+.controller('LoginCtrl', 
+          ['$scope', '$location', 'UserEventsService','$http','$log',
+	function($scope,    $location,   UserEventsService,  $http,  $log) {
 
-		$log('LoginCtrl start');
+		    $log.log('LoginCtrl start');
 
         $scope.$on(UserEventsService.login.loginSuccess, function(e, userDataObj) {
-    		$log('LoginCtrl SUCCESS');
-    		$log(userDataObj);
-        $log('Setting session_id : ' + userDataObj.session_id);
+    		$log.log('LoginCtrl SUCCESS');
+    		$log.log(userDataObj);
+        $log.log('Setting session_id : ' + userDataObj.session_id);
         $http.defaults.headers.common['X-DreamFactory-Session-Token'] = userDataObj.session_id;
 
     		$scope.$parent.currentUser = userDataObj;
@@ -37,7 +38,7 @@ angular.module('angularjsAuthTutorialApp')
 
 	.controller('LogoutCtrl', ['$scope', '$location', 'UserEventsService','$http','$log',
                 function($scope, $location, UserEventsService,$http,$log) {
-		$log('LogoutCtrl start');
+		$log.log('LogoutCtrl start');
         $scope.$on(UserEventsService.logout.logoutSuccess, function(e, userDataObj) {
     		console.log('LogoutCtrl SUCCESS');
             console.log(userDataObj);
@@ -60,28 +61,53 @@ angular.module('angularjsAuthTutorialApp')
 
 $http.get('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log').
   success(function(data, status, headers, config) {
-       $log('UserInfoCtrl SUCCESS');
-       $log(status);
-       $log(data);
-       $log(headers);
-       $log(config);
+       $log.log('UserInfoCtrl SUCCESS');
+       $log.log(status);
+       $log.log(data);
+       $log.log(headers);
+       $log.log(config);
        $scope.elenco = data.record;
 
 
   }).
   error(function(data, status, headers, config) {
-        $log('UserInfoCtrl error');
-        $log(status);
-        $log(data);
-        $log(headers);
-        $log(config);
+        $log.log('UserInfoCtrl error');
+        $log.log(status);
+        $log.log(data);
+        $log.log(headers);
+        $log.log(config);
 
   });
+
+
+  $scope.getData = function(){
+      $log.log('getData ....');
+      $http.get('https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log').
+  success(function(data, status, headers, config) {
+       $log.log('UserInfoCtrl SUCCESS');
+       $log.log(status);
+       $log.log(data);
+       $log.log(headers);
+       $log.log(config);
+       $scope.elenco = data.record;
+      }).
+  error(function(data, status, headers, config) {
+        $log.log('UserInfoCtrl error');
+        $log.log(status);
+        $log.log(data);
+        $log.log(headers);
+        $log.log(config);
+    });
+  };
+
 
   //https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log
   $scope.postLogWithError = function (){
     console.log('postLogWithError ....');
     var data2post = {};
+
+    ERRORE.go();
+
 
     $http.post(
         'https://dsp-paulo-difficiliora.cloud.dreamfactory.com:443/rest/db/log1',
